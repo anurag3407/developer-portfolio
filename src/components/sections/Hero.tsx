@@ -186,7 +186,7 @@ export default function Hero() {
         <div className="relative">
           <h1
             data-hero-headline
-            className="font-display text-fg leading-[0.88] tracking-[-0.03em] text-[clamp(3rem,11vw,12rem)]"
+            className="font-display text-fg leading-[1.05] tracking-[-0.03em] text-[clamp(2.75rem,10vw,10.5rem)] [&>span]:mb-2 md:[&>span]:mb-4"
           >
             <span
               data-line
@@ -214,7 +214,7 @@ export default function Hero() {
 
           <div
             data-hero-mark
-            className="pointer-events-none absolute right-0 top-0 hidden md:block"
+            className="pointer-events-none absolute right-0 top-2 hidden md:block lg:top-6"
           >
             <Sticker />
           </div>
@@ -297,36 +297,133 @@ export default function Hero() {
 
 function Sticker() {
   return (
-    <div className="relative h-44 w-44 lg:h-52 lg:w-52">
+    <div className="relative h-48 w-48 -rotate-[8deg] lg:h-60 lg:w-60">
       <svg
-        viewBox="0 0 200 200"
-        className="sticker absolute inset-0 h-full w-full text-fg"
+        viewBox="0 0 240 240"
+        className="absolute inset-0 h-full w-full"
+        style={{ color: "var(--accent)" }}
       >
         <defs>
+          <filter id="stampRough" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.9"
+              numOctaves="2"
+              seed="4"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="1.4"
+            />
+          </filter>
           <path
-            id="circlePath"
-            d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
+            id="topArc"
+            d="M 120,120 m -92,0 a 92,92 0 1,1 184,0"
+            fill="none"
+          />
+          <path
+            id="bottomArc"
+            d="M 120,120 m -92,0 a 92,92 0 1,0 184,0"
             fill="none"
           />
         </defs>
-        <text fill="currentColor" className="font-mono uppercase" fontSize="12" letterSpacing="6">
-          <textPath href="#circlePath">
-            Available 2026 · Available 2026 · Available 2026 ·
-          </textPath>
-        </text>
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <svg
-          viewBox="0 0 100 100"
-          className="h-16 w-16 animate-float text-accent"
+
+        <g
+          filter="url(#stampRough)"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
+          strokeLinecap="round"
         >
-          <circle cx="50" cy="50" r="40" />
-          <path d="M30 50 L70 50 M50 30 L50 70" />
-        </svg>
-      </div>
+          <circle cx="120" cy="120" r="108" strokeDasharray="2 6" opacity="0.6" />
+          <circle cx="120" cy="120" r="96" />
+          <circle cx="120" cy="120" r="62" />
+        </g>
+
+        <g className="sticker" style={{ transformOrigin: "120px 120px" }}>
+          <text
+            fill="currentColor"
+            fontSize="13"
+            letterSpacing="6"
+            className="font-mono uppercase"
+            style={{ fontWeight: 600 }}
+          >
+            <textPath href="#topArc" startOffset="50%" textAnchor="middle">
+              ★ Studio of One ★ Est. 2026 ★ Made with Care
+            </textPath>
+          </text>
+          <text
+            fill="currentColor"
+            fontSize="11"
+            letterSpacing="5"
+            className="font-mono uppercase"
+          >
+            <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
+              Available — Bengaluru ↔ Worldwide
+            </textPath>
+          </text>
+        </g>
+
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          filter="url(#stampRough)"
+        >
+          <line x1="120" y1="36" x2="120" y2="48" />
+          <line x1="120" y1="192" x2="120" y2="204" />
+          <line x1="36" y1="120" x2="48" y2="120" />
+          <line x1="192" y1="120" x2="204" y2="120" />
+        </g>
+
+        <g
+          fill="currentColor"
+          stroke="none"
+          filter="url(#stampRough)"
+        >
+          <text
+            x="120"
+            y="112"
+            textAnchor="middle"
+            fontSize="11"
+            letterSpacing="5"
+            className="font-mono uppercase"
+          >
+            Indep.
+          </text>
+        </g>
+
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          filter="url(#stampRough)"
+        >
+          <path d="M 96 124 L 144 124 M 120 100 L 120 148" />
+          <circle cx="120" cy="124" r="22" strokeWidth="1.5" opacity="0.6" />
+        </g>
+
+        <g
+          fill="currentColor"
+          stroke="none"
+          filter="url(#stampRough)"
+        >
+          <text
+            x="120"
+            y="166"
+            textAnchor="middle"
+            fontSize="9"
+            letterSpacing="4"
+            className="font-mono uppercase"
+            opacity="0.85"
+          >
+            Anurag M.
+          </text>
+        </g>
+      </svg>
     </div>
   );
 }
